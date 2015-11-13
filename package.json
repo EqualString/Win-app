@@ -1,0 +1,17 @@
+{
+  "name": "AquaFeed-app",
+  "version": "2.5",
+  "main": "index.html",
+  "window": {
+    "icon" : "control/images/favicon.png",
+	"transparent": true,
+	"frame" : false,
+    "width": 1000,
+    "height": 600,
+	"max_width": 1000,
+    "max_height": 600,
+    "toolbar": false,	
+    "position": "center",
+    "resizable": false
+  }
+}

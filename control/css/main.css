@@ -1,0 +1,80 @@
+.top-titlebar {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	height: 32px;
+	background-color: transparent;
+	-webkit-user-select: none;
+	-webkit-app-region: drag;
+}
+#footer-link {
+	position: absolute;
+	left: 17px;
+	bottom: 17px;
+	color:#fff;
+	text-decoration:none;
+	cursor:pointer;
+	font-size:15px;
+}
+.top-titlebar button{
+	font-size:17px;
+	border: none;
+	outline:none;
+}
+#close{
+  color:#fff;
+  position: absolute;
+  border: 0;
+  right:12px;
+  margin-top: 5px;
+  -webkit-app-region: no-drag;
+  cursor:pointer;
+  z-index:9999;
+  background: transparent;
+}
+#minimize{
+  color:#fff;
+  position: absolute;
+  border: 0;
+  right:30px;
+  margin-top: 9px;
+  -webkit-app-region: no-drag;
+  cursor:pointer;
+  z-index:9999;
+  background: transparent;
+}
+#close:hover{
+  color:#2991B7;
+}
+#minimize:hover{
+  color:#2991B7;
+}
+.panel-default > .panel-heading, .btn-default {
+  color: #33B5E5;
+}
+.input-group-addon {
+  color: #33B5E5;
+}
+.btn-default:hover ,
+.btn-default:active ,
+.btn-default:focus 
+{
+  color: #2991B7;
+}
+.cr-styled input:checked + i {
+  border-color: #CCC;
+  color: #2991B7;
+}
+tr{
+  font-size:14px;
+}
+th,td {
+  color: #33B5E5;
+}
+.form-control {
+  color: #33B5E5;	
+}
+#must1, #must2, #must3, #must4{
+  display:none;	
+}
