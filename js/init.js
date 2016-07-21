@@ -1,9 +1,3 @@
-
-//Otvaranje linka u browseru
-$('#footer-link').click( function (){
-	gui.Shell.openExternal("http://aquafeed.cleverapps.io/");
-});
-
 //Init login screen toggle-a, slider-a i datetimepicker-a
 
 $('.toggle').click(function(){
@@ -17,6 +11,9 @@ $('.toggle').click(function(){
     opacity: "toggle"
   }, "slow");
 });
+
+var chk = document.querySelector('.js-switch');
+var rememberMeSwitch = new Switchery(chk, { color: '#2991B7', size: 'small' });
 
 $('.tp-banner').revolution({
 	//Config slidera
@@ -76,5 +73,5 @@ $('.tp-banner').revolution({
 });	
 
 $('#timepicker').datetimepicker({
-		format: 'HH:mm'
+	format: 'HH:mm'
 });

@@ -1,18 +1,20 @@
 /* #PAGE LOAD */
-
 body.royal_loader {
-    background: #33B5E5; 
 	z-index: -1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-border-radius:18px;
+	border-radius:18px!important;
     visibility: hidden;
+	background-color: #33B5E5;
+	background-image: none;
+	clear: both;
 }
 #header{
 	display:none;
 }
 #royal_preloader {
-    font-family: "Open Sans",Arial,sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 12px;
     visibility: visible;
     position: fixed;
@@ -27,6 +29,7 @@ body.royal_loader {
          -o-transition: opacity 0.2s linear 0.8s;
             transition: opacity 0.2s linear 0.8s;
 			-webkit-border-radius:18px;
+			 border-radius:18px;
 }
 #royal_preloader.complete {
     opacity: 0;
@@ -89,15 +92,15 @@ body.royal_loader {
 #royal_preloader.text .loader {
     color: #FFFFFF;
     position: absolute;
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-weight: 800;
     top: 50%;
     left: 50%;
-    height: 40px;
+    height: 50px;
     line-height: 40px;
     margin-top: -20px;
     letter-spacing: 3px;
-    font-size: 36px;
+    font-size: 50px;
     white-space: nowrap;
 }
 #royal_preloader.text .loader div {

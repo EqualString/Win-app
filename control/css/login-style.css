@@ -1,19 +1,28 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,700,600,800,300&subset=latin,latin-ext);
+
 html{
 	overflow:hidden;
     background:transparent;    
-    -webkit-border-radius:18px;
+	border-radius:18px!important;
+	background-clip: padding-box;
 }
+
 body {
 	overflow:hidden;
-	background: #33B5E5;
-	color: #fff;
-	font-family: "Open Sans", Arial, sans-serif;
+	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	-webkit-border-radius:18px;
+	border-radius:18px!important;
+	color: rgba(255, 255, 255, 0.8);
+	background-color: #33B5E5;
+	background-image: url('../images/sales.svg');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 2460px;
+	clear: both;
+	background-clip: padding-box;
 }
+
 .table-app{
 	width:600px;
 	position: absolute;
@@ -36,6 +45,16 @@ p {
 	cursor:default;
 }
 
+.shadow{
+	-webkit-box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
+}
+
+.bootstrap-datetimepicker-widget a{
+	color: #00A2D3 !important;
+}
+
 /* Pen Title */
 .pen-title {
   padding: 30px 0;
@@ -51,6 +70,7 @@ p {
   color:#fff;
   cursor:default;
   text-decoration:none;
+  margin-left: -54px
 }
 .pen-title span {
   font-size: 12px;
@@ -73,8 +93,10 @@ p {
   max-width: 320px;
   width: 100%;
   border-top: 5px solid #2991B7;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   margin: 0 auto;
+  -webkit-box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.75);
 }
 .form-module .toggle {
   cursor: pointer;
@@ -168,5 +190,35 @@ p {
 }
 .form-module button:hover {
   background: #2991B7;
+}
+.switchery{
+  position: absolute;
+  left:15px;
+  margin-top:12px;
+  -webkit-app-region: no-drag;
+  cursor:pointer;
+  z-index:9999;
+  background: transparent;
+}
+#logout{
+   position: absolute;
+  left:15px;
+  margin-top:12px;
+  -webkit-app-region: no-drag;
+  cursor:pointer;
+  z-index:9999;
+  background: transparent;
+  font-size: 20px;
+  color: #fff;
+}
+.logout-p{
+  position: absolute;
+  font-family: 'Roboto', sans-serif;
+  left: 45px;
+  margin-top: 17px;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 15px;
 }
 

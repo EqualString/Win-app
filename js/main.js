@@ -9,49 +9,111 @@
 */
 
 //Dohvaćanje dodatnih nodejs modula
-var mqtt = require('./node_modules/mqtt');
 var moment = require('./node_modules/moment');
-var assert = require('assert');
-var gui = require('nw.gui');
+var http_request = require('./node_modules/request');
+var Datastore = require('./node_modules/nedb');
+var path = require('path');
+var db = new Datastore({ filename: path.join(require('nw.gui').App.dataPath, 'locale.db') });
 
-var win = gui.Window.get();
-win.showDevTools();//Developer tools
+var gui = require('nw.gui');
+var win = gui.Window.get(); //Funckije prozora
+//win.showDevTools(); //Developer tools
+
+//alert("path="+gui.App.dataPath);
 
 //Connectivity flags
 var server_connect = false, web_connect; 
 
 //App variables
-var data,ln,i,user=[],dates=[];
-var client,client_listener,client_sender; //Mqtt clients
+var userID, dates = [];
 var faded = 750;
 
-/** Komunikacija sa serverom **/
-//Zatraživanje podataka od servera
-client = mqtt.connect('mqtt://test.mosquitto.org'); 
-client.subscribe('aquafeed-desktop');
-client.publish('aquafeed-desktop', 'auth_info');
-client.end();
+//Header za POST
+var headers = {
+	'Content-Type': 'application/x-www-form-urlencoded'
+};
 
-//Primanje povratne informacije od servera 
-client_listener = mqtt.connect('mqtt://test.mosquitto.org');
-client_listener.subscribe('aquafeed-send-desktop');
-client_listener.on('message', function (topic, message) {
-	//Server conection flag -> true
-	server_connect = true;
-	$('#must2').css("display","none");
-	client_listener.end();
-	data = message.toString().split('||');
-	ln = data.length;
-	//Credentials
-	user[0] = data[0];
-	user[1] = data[1];
-	//Dates
-	for (i = 2; i< ln-2 ; i++){
-		dates[i-2] = data[i];
+window.onload = function() {
+
+	//Web conection flag
+	var web_connect = window.navigator.onLine; //ako je online = true, offline = false
+	
+	//Test servera
+	if (web_connect == true){
+	
+		//Test Server-a
+		http_request.post("http://localhost:8074/api/app-test", {headers: headers}, function(err, response, body){
+			if (err) {
+				server_connect = false;
+				webTest(web_connect,server_connect);
+				return;
+			}
+			else if (response.statusCode == 200){
+			
+				if(body == "up&running"){ //Server je podignut i radi
+				
+					server_connect = true; //Flag = true
+					db.loadDatabase(); //Dohvaćanje baze
+
+					db.find({ rememberMeToken: true }, function (err, docs) { //Dohvaćanje spremljenih podataka, ako je token = true
+						
+						if(docs != ''){ //Postoji takav dokument
+						
+							var username = docs[0].username;
+							var passwd = docs[0].password;
+							
+							$(".loading").fadeIn(faded).css("display","block");
+							$("#inputs").css("display","none");
+							$("#username").val(username);
+							$("#passwd").val(passwd);
+							makeLogin(username,passwd);
+							
+						}
+						
+						
+					});
+				}
+				else{
+					server_connect = false;
+					webTest(web_connect,server_connect);
+				}
+
+			}
+			else{
+				server_connect = false;
+				webTest(web_connect,server_connect);
+			}
+			
+		}); 
+		
 	}
-	create_table();
-	client_listener.end();
-});
+	else{
+		webTest(web_connect,server_connect);
+	}
+	
+};
+
+/** Komunikacija sa serverom, provjere **/
+
+function webTest(web_connect,server_connect){
+	
+	//Obavijesti
+	if ( web_connect === false ){
+		$('#must3').css("display","none");
+		$('#must2').css("display","none");
+		$('#must4').css("display","none");
+		$('#must5').css("display","none");
+		$('#must1').fadeIn(faded).css("display","inline-block");
+	}
+	else if ( server_connect === false ){
+		$('#must1').css("display","none");
+		$('#must3').css("display","none");
+		$('#must4').css("display","none");
+		$('#must5').css("display","none");
+		$('#must2').fadeIn(faded).css("display","inline-block");
+	}
+	
+}
 
 /** Settings **/
 
@@ -59,26 +121,16 @@ client_listener.on('message', function (topic, message) {
 function close_app(){
 	win.close();
 }
+
 function min_app(){
 	win.minimize();
 }
 
-//Web conection flag
-var web_connect = window.navigator.onLine; //ako je online = true, offline = false
+//Otvaranje linka u browseru
+$('#footer-link').click( function (){
+	gui.Shell.openExternal("http://aquatest-testfeed.rhcloud.com/login");
+});
 
-//Testiranje konekcije
-if ( web_connect === false ){
-	$('#must3').css("display","none");
-	$('#must2').css("display","none");
-	$('#must4').css("display","none");
-	$('#must1').fadeIn(faded).css("display","inline-block");
-}
-else if ( server_connect === false ){
-	$('#must1').css("display","none");
-	$('#must4').css("display","none");
-	$('#must4').css("display","none");
-	$('#must2').fadeIn(faded).css("display","inline-block");
-}
 
 //Disable file drop over the application
 window.addEventListener("dragover", function (e) {
@@ -101,30 +153,134 @@ window.addEventListener("dragstart", function (e) {
 //Js-fje
 /** Autentikacija **/
 function test_auth(){
+
 	if (server_connect === true){
-		var info = [];
-		info[0] = document.getElementById("em").value;
-		info[1] = document.getElementById("passwd").value;
-		if((info[0] == '')||(info[1]== '')){
+	
+		var username = $("#username").val();
+		var passwd = $("#passwd").val();
+	
+		if ((username == '')||(passwd == '')){
 			$('#must1').css("display","none");
 			$('#must2').css("display","none");
 			$('#must4').css("display","none");
+			$('#must5').css("display","none");
 			$('#must3').fadeIn(faded).css("display","inline-block");
-			
-		}
-		else if((info[0] == user[0])&&(info[1] == user[1])){
-			$('#login').css('display','none');
-			$('#slider').fadeIn(780).css('display','block');
 		}
 		else{
-			$('#must1').css("display","none");
-			$('#must2').css("display","none");
-			$('#must3').css("display","none");
-			$('#must4').fadeIn(faded).css("display","inline-block");
+			
+			if(chk.checked == true){ //Zapamti prijavu i podatke
+			
+				var doc = { 
+					appinfo: "user",
+					rememberMeToken: true,
+				    username: username,
+					password: passwd
+                }; 
+			   
+			    //Novi podaci se ubacuju u bazu
+				db.update({ appinfo: "user" }, doc, {}, function (err, numReplaced) {
+					
+					if(err){
+						$('#must1').css("display","none");
+						$('#must3').css("display","none");
+						$('#must4').css("display","none");
+						$('#must5').css("display","none");
+						$('#must2').fadeIn(faded).css("display","inline-block");
+					}
+					else{
+						$(".loading").fadeIn(faded).css("display","block");
+						$("#inputs").css("display","none");
+						makeLogin(username,passwd);
+					}
+
+				});
+	
+			}
+			else{
+				
+				var doc = {
+					appinfo: "user",
+					rememberMeToken: false
+                }; 
+				
+				//Novi podaci se ubacuju u bazu
+				db.update({ appinfo: "user" }, doc, {}, function (err, numReplaced) {
+					
+					if(err){
+						$('#must1').css("display","none");
+						$('#must3').css("display","none");
+						$('#must4').css("display","none");
+						$('#must5').css("display","none");
+						$('#must2').fadeIn(faded).css("display","inline-block");
+					}
+					else{
+						$(".loading").fadeIn(faded).css("display","block");
+						$("#inputs").css("display","none");
+						makeLogin(username,passwd);
+					}
+					
+				});
+			
+			}
+			
+			
 		}
 	}
 }
 
+function makeLogin(username,passwd){
+	
+	//Slanje na worker aplikaciju
+	http_request.post("http://localhost:8074/api/app-login", {form: {user: username, pass: passwd}, headers: headers}, function(err,response,body){
+		if (err) {
+			return;
+		}
+		else if (response.statusCode == 200){
+		
+			setTimeout( function() {
+				$(".loading").css("display","none");
+				$("#inputs").fadeIn(faded).css("display","block");
+					
+				//Podaci dobiveni od Worker aplikacije (server-a)
+				if (body == "login-error"){ //Greška na serveru
+					$('#must1').css("display","none");
+					$('#must3').css("display","none");
+					$('#must4').css("display","none");
+					$('#must5').css("display","none");
+					$('#must2').fadeIn(faded).css("display","inline-block");
+				}
+				else if (body == "wrong-username"){ //Krivo korisničko ime
+					$('#must1').css("display","none");
+					$('#must2').css("display","none");
+					$('#must3').css("display","none");
+					$('#must5').css("display","none");
+					$('#must4').fadeIn(faded).css("display","inline-block");
+				}
+				else if (body == "wrong-password"){ //Kriva lozinka
+					$('#must1').css("display","none");
+					$('#must2').css("display","none");
+					$('#must3').css("display","none");
+					$('#must4').css("display","none");
+					$('#must5').fadeIn(faded).css("display","inline-block");
+				}
+				else{
+
+					var serverData = JSON.parse(body);
+
+					userID = serverData.userId;
+					dates = serverData.times;
+
+					create_table();
+					$('#login-switch').css('display','none');
+					$('#logout-switch').css('display','block');
+					$('#login').css('display','none');
+					$('#slider').fadeIn(780).css('display','block');
+					
+				}
+			}, 2875);
+		}
+	}); 
+}
 /** Izgradnja tablice **/
 function create_table() {
 	$("#tablebody").html("");//Očisti
@@ -179,9 +335,4 @@ function saveTable (){
 	for( i=0; i<len; i++){
 		sendData += dates[i] + '||';
 	}
-	//Slanje novih vrijednosti tablice na server
-	client_sender = mqtt.connect('mqtt://test.mosquitto.org'); 
-	client_sender.subscribe('aquafeed-desktop-new');
-	client_sender.publish('aquafeed-desktop-new', sendData);
-	client_sender.end();
 }
