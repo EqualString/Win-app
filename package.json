@@ -1,5 +1,6 @@
 {
-  "name": "AquaFeed-app",
+  "name": "AquaFeed",
+  "title": "AquaFeed",
   "version": "2.5",
   "main": "index.html",
   "window": {

@@ -11,13 +11,15 @@
 //Dohvaćanje dodatnih nodejs modula
 var moment = require('./node_modules/moment');
 var http_request = require('./node_modules/request');
+
+//Povezivanje na lokalnu neDB bazu
 var Datastore = require('./node_modules/nedb');
 var path = require('path');
 var db = new Datastore({ filename: path.join(require('nw.gui').App.dataPath, 'locale.db') });
 
 var gui = require('nw.gui');
 var win = gui.Window.get(); //Funckije prozora
-//win.showDevTools(); //Developer tools
+win.showDevTools(); //Developer tools
 
 //alert("path="+gui.App.dataPath);
 
@@ -38,6 +40,20 @@ window.onload = function() {
 	//Web conection flag
 	var web_connect = window.navigator.onLine; //ako je online = true, offline = false
 	
+	db.loadDatabase(); //Dohvaćanje baze
+	
+	//Prazna baza podataka
+	var doc = {
+		appinfo: "user",
+		rememberMeToken: false
+    }; 
+	
+	db.find({ appinfo: "user" }, function (err, oldDoc) { 
+		if(oldDoc == ''){ 
+			db.insert(doc, function (err, newDoc) {});	
+		}
+	});
+
 	//Test servera
 	if (web_connect == true){
 	
@@ -53,7 +69,6 @@ window.onload = function() {
 				if(body == "up&running"){ //Server je podignut i radi
 				
 					server_connect = true; //Flag = true
-					db.loadDatabase(); //Dohvaćanje baze
 
 					db.find({ rememberMeToken: true }, function (err, docs) { //Dohvaćanje spremljenih podataka, ako je token = true
 						
@@ -173,13 +188,13 @@ function test_auth(){
 				var doc = { 
 					appinfo: "user",
 					rememberMeToken: true,
-				    username: username,
+					username: username,
 					password: passwd
-                }; 
-			   
-			    //Novi podaci se ubacuju u bazu
+				}; 
+			
+				//Novi podaci se ubacuju u bazu
 				db.update({ appinfo: "user" }, doc, {}, function (err, numReplaced) {
-					
+							
 					if(err){
 						$('#must1').css("display","none");
 						$('#must3').css("display","none");
@@ -193,19 +208,19 @@ function test_auth(){
 						makeLogin(username,passwd);
 					}
 
-				});
-	
+				});	
+
 			}
 			else{
 				
 				var doc = {
 					appinfo: "user",
 					rememberMeToken: false
-                }; 
+				}; 
 				
 				//Novi podaci se ubacuju u bazu
 				db.update({ appinfo: "user" }, doc, {}, function (err, numReplaced) {
-					
+				
 					if(err){
 						$('#must1').css("display","none");
 						$('#must3').css("display","none");
@@ -218,11 +233,10 @@ function test_auth(){
 						$("#inputs").css("display","none");
 						makeLogin(username,passwd);
 					}
-					
+		
 				});
-			
+
 			}
-			
 			
 		}
 	}
