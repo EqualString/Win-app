@@ -28,8 +28,8 @@
 }
 .logo-new-logo-inv:before {
     content: "\e903";
-	font-size: 58px;
-	margin-top: -4px;
+	font-size: 50px;
+	margin-top: 2px;
 	position: absolute;
 	margin-left: 2px;
 }

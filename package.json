@@ -1,18 +1,58 @@
 {
-  "name": "AquaFeed",
-  "title": "AquaFeed",
-  "version": "2.5",
-  "main": "index.html",
-  "window": {
-    "icon" : "control/images/favicon.png",
-	"transparent": true,
-	"frame" : false,
-    "width": 1000,
-    "height": 600,
-	"max_width": 1000,
-    "max_height": 600,
-    "toolbar": false,	
-    "position": "center",
-    "resizable": false
-  }
+    "webexe_settings": {
+        "download_dir": "C:/Users/Alen/AppData/Local/Web2Executable/Web2Executable/files/downloads",
+        "linux-x64": false,
+        "nw_version": "0.17.3",
+        "nw_compression_level": 1,
+        "custom_script": "",
+        "export_dir": "output",
+        "uncompressed_folder": false,
+        "force_download": false,
+        "linux-x32": false,
+        "windows-x32": false,
+        "mac-x64": false,
+        "windows-x64": true,
+        "sdk_build": false,
+        "output_pattern": ""
+    },
+    "window": {
+        "icon": "control/images/favicon.png",
+        "frame": false,
+        "as_desktop": false,
+        "toolbar": false,
+        "kiosk_emulation": false,
+        "max_width": 1000,
+        "fullscreen": false,
+        "position": "center",
+        "id": "Win-app",
+        "width": 1000,
+        "transparent": true,
+        "title": "AquaFeed",
+        "show_in_taskbar": true,
+        "visible": true,
+        "visible_on_all_workspaces": false,
+        "show": true,
+        "resizable": false,
+        "max_height": 1000,
+        "kiosk": false,
+        "always_on_top": false,
+        "height": 1000
+    },
+    "title": "AquaFeed",
+    "main": "index.html",
+    "version": "2.5",
+    "name": "AquaFeed",
+    "app_name": "Win-app",
+    "webkit": {
+        "plugin": true,
+        "double_tap_to_zoom_enabled": false
+    },
+    "keywords": [
+        "AquaFeed",
+        "IoT"
+    ],
+    "nodejs": true,
+    "node-remote": [],
+    "additional_trust_anchors": [],
+    "description": "Desktop App for IoT AF project"
 }

@@ -1,18 +1,20 @@
+body, html{
+	overflow-x:hidden;
+	overflow-y:hidden;
+	height:100%;
+}
 
 html{
-	overflow:hidden;
     background:transparent;    
-	border-radius:18px!important;
 	background-clip: padding-box;
 }
 
 body {
 	overflow:hidden;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Poiret One', cursive;
 	font-size: 16px;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	border-radius:18px!important;
 	color: rgba(255, 255, 255, 0.8);
 	background-color: #33B5E5;
 	background-image: url('../images/sales.svg');
@@ -23,14 +25,33 @@ body {
 	background-clip: padding-box;
 }
 
+.content-background{
+	background-image: url(../images/ptrn.png);
+    background-repeat: repeat-x;
+    background-position: center top;
+	background-size: auto;
+}
+
+button:active {
+	outline: none;
+	border: none;
+}
+
+button:focus {
+	outline:0;
+}
 .table-app{
 	width:600px;
 	position: absolute;
-    top:60px;
+    top:164px;
     bottom: 0;
     left: 0;
     right: 0;
     margin: auto;
+}
+
+#tablebody > td {
+	font-weight:600;
 }
 .noselect {
     -webkit-touch-callout: none;
@@ -57,15 +78,16 @@ p {
 
 /* Pen Title */
 .pen-title {
-  padding: 30px 0;
+  padding: 30px 0 22px 0;
   text-align: center;
   letter-spacing: 2px;
   cursor:default;
+  margin-top: 25px;
 }
 .pen-title h1 {
-  margin: 0 0 10px;
-  font-weight: 400;
-  font-size: 42px;
+  margin: 0 0 6px;
+  font-weight: 500;
+  font-size: 45px;
   line-height: normal;
   color:#fff;
   cursor:default;
@@ -82,13 +104,15 @@ p {
   color: #fff;
   font-weight: 300;
   font-size: 18px;
-  line-height: 28px;
+  line-height: 30px;
 }
 
 /* Form Module */
 .form-module {
+  z-index:999;
  -webkit-border-radius:18px;
-  position: relative;
+  position: fixed;
+  left:345px;
   background: #ffffff;
   max-width: 320px;
   width: 100%;
@@ -138,6 +162,7 @@ p {
 .form-module .form {
   display: none;
   padding: 40px;
+  padding-top: 32px;
 }
 .form-module .form:nth-child(2) {
   display: block;
@@ -146,7 +171,7 @@ p {
   margin: 0 0 20px;
   color: #33b5e5;
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
   cursor:default;
 }
@@ -155,7 +180,7 @@ p {
   margin-bottom:6px;
   color: #EF4751;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 1;
   cursor:default;
   display:none;
@@ -171,6 +196,9 @@ p {
   font-wieght: 400;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  font-family: 'Poiret One', cursive;
+  font-size: 16px;
+  font-weight: bold;
 }
 .form-module input:focus {
   border: 1px solid #33b5e5;
@@ -187,38 +215,19 @@ p {
   color: #ffffff;
   -webkit-transition: 0.3s ease;
   transition: 0.3s ease;
+  font-family: 'Poiret One', cursive;
+  font-size: 16px;
+  font-weight: 500;
 }
 .form-module button:hover {
   background: #2991B7;
 }
 .switchery{
   position: absolute;
-  left:15px;
-  margin-top:12px;
+  left:14px;
+  margin-top:7px;
   -webkit-app-region: no-drag;
   cursor:pointer;
   z-index:9999;
   background: transparent;
 }
-#logout{
-   position: absolute;
-  left:15px;
-  margin-top:12px;
-  -webkit-app-region: no-drag;
-  cursor:pointer;
-  z-index:9999;
-  background: transparent;
-  font-size: 20px;
-  color: #fff;
-}
-.logout-p{
-  position: absolute;
-  font-family: 'Roboto', sans-serif;
-  left: 45px;
-  margin-top: 17px;
-  color: #fff;
-  text-decoration: none;
-  cursor: pointer;
-  font-size: 15px;
-}
-

@@ -3,19 +3,21 @@ body.royal_loader {
 	z-index: -1;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	-webkit-border-radius:18px;
-	border-radius:18px!important;
     visibility: hidden;
 	background-color: #33B5E5;
-	background-image: none;
+	background-image: url('../images/sales.svg');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 2460px;
 	clear: both;
+	background-clip: padding-box;
 }
 #header{
 	display:none;
 }
 #royal_preloader {
-    font-family: 'Roboto', sans-serif;
-    font-size: 12px;
+    font-family: 'Poiret One', cursive;
+    font-size: 75px;
     visibility: visible;
     position: fixed;
     top: 0px;
@@ -23,13 +25,20 @@ body.royal_loader {
     bottom: 0px;
     left: 0px;
     z-index: 9999999999;
+	-webkit-user-select: none!important;
+	-webkit-app-region: drag!important;
     -webkit-transition: opacity 0.2s linear 0.8s;
        -moz-transition: opacity 0.2s linear 0.8s;
         -ms-transition: opacity 0.2s linear 0.8s;
          -o-transition: opacity 0.2s linear 0.8s;
             transition: opacity 0.2s linear 0.8s;
-			-webkit-border-radius:18px;
-			 border-radius:18px;
+	background-color: #33B5E5;
+	background-image: url('../images/sales.svg');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 2460px;
+	clear: both;
+	background-clip: padding-box;		
 }
 #royal_preloader.complete {
     opacity: 0;
@@ -46,7 +55,13 @@ body.royal_loader {
         -ms-transition: background 0.5s linear;
          -o-transition: background 0.5s linear;
             transition: background 0.5s linear;
-			-webkit-border-radius:18px;
+	background-color: #33B5E5;
+	background-image: url('../images/sales.svg');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: 2460px;
+	clear: both;
+	background-clip: padding-box;		
 }
 #royal_preloader.number .name {
     position: absolute;
@@ -80,7 +95,7 @@ body.royal_loader {
     padding-top: 80px;
     width: 180px;
     position: absolute;
-    font-size: 50px;
+    font-size: 80px;
     top: 50%;
     left: 50%;
     -webkit-transition: all 0.3s linear 0.5s;
@@ -92,15 +107,15 @@ body.royal_loader {
 #royal_preloader.text .loader {
     color: #FFFFFF;
     position: absolute;
-	font-family: 'Roboto', sans-serif;
+	font-family: 'Poiret One', cursive;
 	font-weight: 800;
     top: 50%;
-    left: 50%;
-    height: 50px;
-    line-height: 40px;
-    margin-top: -20px;
+    left: 52%;
+    height: 120px;
+    line-height: 76px;
+    margin-top: -50px;
     letter-spacing: 3px;
-    font-size: 50px;
+    font-size: 75px;
     white-space: nowrap;
 }
 #royal_preloader.text .loader div {
